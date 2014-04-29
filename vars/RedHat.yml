@@ -1,0 +1,15 @@
+---
+# list of packages to install
+nginx_packages:
+  - nginx
+
+# name of the service
+nginx_service: nginx
+
+# user and group
+nginx_user: www-data
+
+# directories
+nginx_dir_etc: /etc/nginx
+nginx_file_pid: /var/run/nginx.pid
+nginx_dir_log: /var/log/nginx

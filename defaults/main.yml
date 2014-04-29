@@ -1,0 +1,35 @@
+---
+
+# sites to be enabled on the hosts
+nginx_sites: []
+
+# conf.d directory configs
+nginx_conf_d: []
+
+# list of files to be included in main section
+# of the nginx.conf
+nginx_conf_main_include:
+ - modules/http.conf
+
+# list of directories to be created include etc
+# except the default one
+# each item must have: name, owner, group,  mode
+nginx_dir_extra: []
+
+# list of files to by copies
+# each item must have: src, dest
+nginx_file_extra:
+ - src: modules/http.conf
+   dest: modules/http.conf
+
+# rest of the host settings
+nginx_pkg_state: present
+nginx_service_enabled: yes
+nginx_service_state: started
+
+# where to lookup for include and scripts
+# deflaults in role directory
+nginx_dir_prefix: .
+
+# main configuration file
+nginx_conf_worker_processes: 1

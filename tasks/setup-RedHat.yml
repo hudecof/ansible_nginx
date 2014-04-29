@@ -1,0 +1,7 @@
+---
+- name: "check packages (redhat)"
+  action: yum pkg={{ item }} state={{ zabbix_agent_pkg_state }}
+  tags:
+    - nginx
+    - setup
+  with_items: nginx_packages

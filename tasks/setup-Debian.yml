@@ -1,0 +1,7 @@
+---
+- name: "check packages (debian)"
+  action: apt pkg={{ item }} state={{ nginx_pkg_state }}
+  tags:
+    - nginx
+    - setup
+  with_items: nginx_packages

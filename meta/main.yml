@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Peter Hudec
+  description: installation and configuration of the nginx
+  company: CNC, a.s.
+  license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 1.4 (or higher)
+  
+  platforms:
+  - name: EL
+    versions:
+    - 5
+    - 6
+  - name: Ubuntu
+    versions:
+    - lucid
+    - precise
+  - name: Debian
+    versions:
+    - squeeze
+    - wheezy
+  categories:
+  - web
