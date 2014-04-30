@@ -24,9 +24,9 @@ These variables are in `defaults/main.yml`.
 
 `nginx_sites` is the list of the siets to be generated to the `{{ nging_dir_etc }}/sites-available`. 
 
-   nginx_sites:
-    - name: test
-      state: enabled
+    nginx_sites:
+     - name: test
+       state: enabled
 
 
 `nginx_conf_d` is the list of the file to be copies and enabled
