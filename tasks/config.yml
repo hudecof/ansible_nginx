@@ -70,15 +70,6 @@
   notify:
     - restart nginx
 
-- name: "copy site configs"
-  action: template src={{ nginx_dir_prefix }}/sites/{{ item.name }} dest={{ nginx_dir_etc }}/sites-available/ owner=root group=root mode=0640
-  tags: 
-    - nginx
-    - config
-  with_items: $nginx_sites
-  notify:
-    - restart nginx
-
 - name: "copy extra configs"
   action: template src={{ nginx_dir_prefix }}/{{ item.src }} dest={{ nginx_dir_etc }}/{{ item.dest }} owner=root group=root mode=0640
   tags: 
