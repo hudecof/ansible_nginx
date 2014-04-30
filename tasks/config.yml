@@ -66,7 +66,7 @@
     - nginx
     - config
   with_items: $nginx_sites
-  when: "item.state != 'enabled' "
+  when: "item.state != 'enabled'"
   notify:
     - restart nginx
 
@@ -76,5 +76,18 @@
     - nginx
     - config
   with_items: $nginx_file_extra
+  when: "item.state == 'enabled'"
   notify:
     - restart nginx
+
+- name: "remove extra configs"
+  action: file path dest={{ nginx_dir_etc }}/{{ item.dest }} state=absent
+  tags: 
+    - nginx
+    - config
+  with_items: $nginx_file_extra
+  when: "item.state != 'enabled'"
+  notify:
+    - restart nginx
+
+

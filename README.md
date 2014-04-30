@@ -48,8 +48,10 @@ is also include file.
     nginx_file_extra:
      - src: modules/http.conf
        dest: modules/http.conf
+       state: enabled
      - src: modules/mail.conf
        dest: modules/mail.conf
+       state: disabled
 
 
 `nginx_dir_extra` list of the extra directoris to be created. For example for the mail module.
