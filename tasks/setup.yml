@@ -41,7 +41,6 @@
     - { name: 'net.ipv4.conf.default.secure_redirects', value: '0' }
     - { name: 'net.ipv4.conf.all.send_redirects', value: '0' }
     - { name: 'net.ipv4.conf.default.send_redirects', value: '0' }
-    - { name: 'kernel.exec-shield', value: '1' }
     - { name: 'kernel.randomize_va_space', value: '1' }
     - { name: 'net.ipv6.conf.default.router_solicitations', value: '0' }
     - { name: 'net.ipv6.conf.default.accept_ra_rtr_pref', value: '0' }
