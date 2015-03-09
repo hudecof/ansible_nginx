@@ -14,7 +14,7 @@
 
 - name: "creating extra directories"
   action: file path={{ nginx_dir_etc}}/{{ item.name }} owner={{ item.owner }} group={{ item.group }} mode={{ item.mode }} state=directory
-  with_items: $nginx_dir_extra
+  with_items: nginx_dir_extra
   tags:
     - nginx
     - setup
@@ -24,4 +24,4 @@
   tags:
     - nginx
     - setup
-  with_items: $nginx_sysctl
+  with_items: nginx_sysctl

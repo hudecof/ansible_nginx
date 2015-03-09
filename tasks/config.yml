@@ -4,8 +4,8 @@
   tags: 
     - nginx
     - config
-  with_items: $nginx_conf_d 
-  when: "item.state == 'enabled'"
+  with_items: nginx_conf_d 
+  when: item.state == 'enabled'
   notify:
     - restart nginx
 
@@ -14,8 +14,8 @@
   tags: 
     - nginx
     - config
-  with_items: $nginx_conf_d 
-  when: "item.state != 'enabled'"
+  with_items: nginx_conf_d 
+  when: item.state != 'enabled'
   notify:
     - restart nginx
 
@@ -45,8 +45,8 @@
   tags: 
     - nginx
     - config
-  with_items: $nginx_sites
-  when: "item.state == 'enabled'"
+  with_items: nginx_sites
+  when: item.state == 'enabled'
   notify:
     - restart nginx
 
@@ -55,8 +55,8 @@
   tags: 
     - nginx
     - config
-  with_items: $nginx_sites
-  when: "item.state == 'enabled'"
+  with_items: nginx_sites
+  when: item.state == 'enabled'
   notify:
     - restart nginx
 
@@ -65,8 +65,8 @@
   tags: 
     - nginx
     - config
-  with_items: $nginx_sites
-  when: "item.state != 'enabled'"
+  with_items: nginx_sites
+  when: item.state != 'enabled'
   notify:
     - restart nginx
 
@@ -75,8 +75,8 @@
   tags: 
     - nginx
     - config
-  with_items: $nginx_file_extra
-  when: "item.state == 'enabled'"
+  with_items: nginx_file_extra
+  when: item.state == 'enabled'
   notify:
     - restart nginx
 
@@ -85,8 +85,8 @@
   tags: 
     - nginx
     - config
-  with_items: $nginx_file_extra
-  when: "item.state != 'enabled'"
+  with_items: nginx_file_extra
+  when: item.state != 'enabled'
   notify:
     - restart nginx
 
