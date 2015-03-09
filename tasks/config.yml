@@ -89,5 +89,3 @@
   when: item.state != 'enabled'
   notify:
     - restart nginx
-
-
