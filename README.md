@@ -6,83 +6,48 @@ It is very hard to write a generic role for the ansible configuration.
 This role suppose to use includes so you can write your own piece ot the configuration files
 and include them to the main config.
 
-The sites configuration files are just plain text files, but I'm using power of the jinja2 template engine
-to keep the config files KISS.
+It's ment to be formore experienced users, sinde of theshell itgenerates non vlaid configuration.
+
 
 ## Requirements
-This role requires Ansible 1.4 or higher and platform requirements are listed in the metadata file.
+
+- ansible: 2.1
+- role: hudecof.nginx-repo
 
 ## Role Variables
 
 ### Distribution specific
-These variables are in `var/Debian.yml` and `vars/RedHat.yml`.
-They are included based on the distribution of the target system.
 
+OS specific variables are defined in `vars/os-<distribution>.yml`, but could be still overwritten.
 ### Global
-These variables are in `defaults/main.yml`.
+
+These variables are in `defaults/main.yml`. I will list only subset of them.
+
+`nginx_packages` list of packages to install/remove and is derived from OS specific variables
+```
+nginx_packages:
+  - {'name': 'nginx', 'state': 'present'}
+```
+
+`nginx_service` is name o the service and is derived from the OS specific variables.
+
+`nginx_user` and `nginx_group` are user and group name to run service under
+
+`nginx_config_backup` is boolean. If set, backup file is created for each changed configuration file.
+
+`nginx_dir_prefix` is directory where the confuguration file templaes will be searched for. I do not provide any sample config file. I used to set it `{{ playbook_dir}}/files/nginx`
 
 
-`nginx_sites` is the list of the siets to be generated to the `{{ nging_dir_etc }}/sites-available`. 
+### Enable modules
+`nginx_server_http`, `nginx_server_mail` and `nginx_server_stream` are booleans to be set when want to run the modele. In most cases you set the `nginx_server_http`
 
-    nginx_sites:
-     - name: test
-       state: enabled
+### Modules configuration files
+`nginx_core_conf`, `nginx_http_conf`, `nginx_http_sites`, `nginx_mail_conf`, `nginx_mail_sites`, `nginx_stream_conf`, `nginx_stream_sites`, `nginx_main_conf` are list of configuraion files, where each item looks like
 
-
-`nginx_conf_d` is the list of the file to be copies and enabled
-
-    nginx_conf_d:
-     - name: basic.conf
-       state: enabled 
+    - {'file': '<filename>', 'enabled': True/False }
+  
+The **file** will be copies in coresponding ``<module>.d/<conf/site>-available`` directory. If config file is enabled, the symlink to  ``<module>.d/<conf/site>-enabled` is created.
 
 
-`nginx_conf_main_include` is the list of the files to be included in the main configuration file. The **http** sesction
-is also include file.
-
-    nginx_conf_main_include:
-     - modules/http.conf
-
-
-`nginx_file_extra` is the list of the files to be copies to `{{ nginx_dir_etc }}` expept fthe main configurtion file.
-
-    nginx_file_extra:
-     - src: modules/http.conf
-       dest: modules/http.conf
-       state: enabled
-     - src: modules/mail.conf
-       dest: modules/mail.conf
-       state: disabled
-
-
-`nginx_dir_extra` list of the extra directoris to be created. For example for the mail module.
-
-    nginx_dir_extra:
-     - name: mail.d
-       owner: root
-       group: root
-       mode: '0750'
-
-## Site configuration
-In the **templates/sites/tmpl** I have included some templates which could be helpfull to create site configs.
-
-    upstream upstream_site_test {
-      ip_hash;
-      server 192.168.10.10:80;
-      server 192.168.10.10:80;
-    }
-
-    server {
-      listen *:443;
-      server_name	test.test.sk;
-
-      {% include 'tmpl/log_upstream.conf' %}
-      {% include 'tmpl/ssl.conf' %}
-      {% include 'tmpl/proxy_headers.conf' %}
-
-      location / {
-        proxy_redirect     off;
-        proxy_set_header Host $host;
-        proxy_pass http://upstream_site_test;
-      }
-    }
-
+## Example configuration
+TBD
