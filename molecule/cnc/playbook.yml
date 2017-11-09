@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: nginx
+      nginx_dir_prefix: "{{ playbook_dir }}/../default/files"
+      nginx_test: True
+      nginx_main_conf:
+        - {'name': 'events.conf', 'enabled': True}

@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: hudecof.nginx
+      nginx_test: True
+      nginx_dir_prefix: "{{ playbook_dir }}/files"
+      nginx_main_conf:
+        - {'name': 'events.conf', 'enabled': True}
