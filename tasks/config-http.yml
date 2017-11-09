@@ -1,0 +1,40 @@
+---
+
+- name: copy http includes config file
+  template:
+    src: "{{ nginx_dir_prefix }}/http-conf/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/http.d/conf-available/"
+    owner: root
+    group: "{{ nginx_group }}"
+    mode: 0640
+    backup: "{{ nginx_config_backup }}"
+  with_items: "{{ nginx_http_conf }}"
+  loop_control:
+    loop_var: config
+  notify:
+    - restart nginx
+
+- name: enable http includes config file
+  file:
+    src: "{{ nginx_dir_etc }}/http.d/conf-available/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/http.d/conf-enabled/{{ config.name }}"
+    owner: root
+    group: "{{ nginx_group }}"
+    state: link
+  with_items: "{{ nginx_http_conf }}"
+  loop_control:
+    loop_var: config
+  when: config.enabled
+  notify:
+    - restart nginx
+
+- name: disable http includes config file
+  file:
+    path: "{{ nginx_dir_etc }}/http.d/conf-enabled/{{ config.name }}"
+    state: absent
+  with_items: "{{ nginx_http_conf }}"
+  loop_control:
+    loop_var: config
+  when: not config.enabled
+  notify:
+    - restart nginx

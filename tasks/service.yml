@@ -1,6 +1,7 @@
 ---
 - name: ensure nginx started/stopped
-  service: name={{ nginx_service }} state={{ nginx_service_state }} enabled={{ nginx_service_enabled }}
-  tags:
-   - nginx
-   - service
+  service:
+    name: "{{ nginx_service }}"
+    state: "{{ nginx_service_state }}"
+    enabled: "{{ nginx_service_enabled }}"
+  when: not nginx_test

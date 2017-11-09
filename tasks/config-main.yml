@@ -1,0 +1,51 @@
+---
+- name: copy main includes config file
+  template:
+    src: "{{ nginx_dir_prefix }}/main-conf/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/main.d/conf-available/"
+    owner: root
+    group: "{{ nginx_group }}"
+    mode: 0640
+    backup: "{{ nginx_config_backup }}"
+  with_items: "{{ nginx_main_conf }}"
+  loop_control:
+    loop_var: config
+  notify:
+    - restart nginx
+
+- name: enable main includes config file
+  file:
+    src: "{{ nginx_dir_etc }}/main.d/conf-available/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/main.d/conf-enabled/{{ config.name }}"
+    owner: root
+    group: "{{ nginx_group }}"
+    state: link
+  with_items: "{{ nginx_main_conf }}"
+  loop_control:
+    loop_var: config
+  when: config.enabled
+  notify:
+    - restart nginx
+
+- name: disable main includes config file
+  file:
+    path: "{{ nginx_dir_etc }}/main.d/conf-enabled/{{ config.name }}"
+    state: absent
+  with_items: "{{ nginx_main_conf }}"
+  loop_control:
+    loop_var: config
+  when: not config.enabled
+  notify:
+    - restart nginx
+
+- name: copy main config file
+  template:
+    src: "nginx.conf"
+    dest: "{{ nginx_dir_etc }}/nginx.conf"
+    owner: root
+    group: "{{ nginx_group }}"
+    mode: 0640
+    backup: "{{ nginx_config_backup }}"
+    validate: "{{ nginx_binary }} -t -c %s"
+  notify:
+    - restart nginx

@@ -1,87 +1,39 @@
 ---
 
-# sites to be enabled on the hosts
-nginx_sites: []
+nginx_packages: "{{ __nginx_packages }}"
+nginx_service: "{{ __nginx_service }}"
+nginx_user: "{{ __nginx_user }}"
+nginx_group: "{{ __nginx_group }}"
 
-# conf.d directory configs
-nginx_conf_d: []
+nginx_dir_etc: "{{ __nginx_dir_etc }}"
+nginx_file_pid: "{{ __nginx_file_pid }}"
+nginx_dir_log: "{{ __nginx_dir_log }}"
+nginx_binary: "{{ __nginx_binary }}"
 
-# list of files to be included in main section
-# of the nginx.conf
-nginx_conf_main_include:
- - modules/http.conf
+nginx_server_http: False
+nginx_server_mail: False
+nginx_server_stream: False
 
-# list of directories to be created include etc
-# except the default one
-# each item must have: name, owner, group,  mode
-nginx_dir_extra: []
+nginx_core_conf: []
 
-# list of files to by copies
-# each item must have: src, dest
-nginx_file_extra:
- - src: modules/http.conf
-   dest: modules/http.conf
+nginx_http_conf: []
+nginx_http_sites: []
 
-nginx_sysctl:
-  - name: 'net.ipv6.bindv6only'
-    value: '1'
-  - name: 'net.ipv4.ip_forward'
-    value: '0'
-  - name: 'net.ipv6.conf.all.forwarding'
-    value: '0'
-  - name: 'net.ipv4.icmp_echo_ignore_broadcasts'
-    value: '1'
-  - name: 'net.ipv4.icmp_ignore_bogus_error_responses'
-    value: '1'
-  - name: 'net.ipv4.tcp_syncookies'
-    value: '1'
-  - name: 'net.ipv4.conf.all.accept_source_route'
-    value: '1'
-  - name: 'net.ipv4.conf.default.accept_source_route'
-    value: '0'
-  - name: 'net.ipv4.conf.all.rp_filter'
-    value: '1'
-  - name: 'net.ipv4.conf.default.rp_filter'
-    value: '1'
-  - name: 'net.ipv4.conf.all.accept_redirects'
-    value: '0'
-  - name: 'net.ipv4.conf.default.accept_redirects'
-    value: '0'
-  - name: 'net.ipv4.conf.all.secure_redirects'
-    value: '0'
-  - name: 'net.ipv4.conf.default.secure_redirects'
-    value: '0'
-  - name: 'net.ipv4.conf.all.send_redirects'
-    value: '0'
-  - name: 'net.ipv4.conf.default.send_redirects'
-    value: '0'
-  - name: 'kernel.randomize_va_space'
-    value: '1'
-  - name: 'net.ipv6.conf.default.router_solicitations'
-    value: '0'
-  - name: 'net.ipv6.conf.default.accept_ra_rtr_pref'
-    value: '0'
-  - name: 'net.ipv6.conf.default.accept_ra_pinfo'
-    value: '0'
-  - name: 'net.ipv6.conf.default.accept_ra_defrtr'
-    value: '0'
-  - name: 'net.ipv6.conf.default.autoconf'
-    value: '0'
-  - name: 'net.ipv6.conf.default.dad_transmits'
-    value: '0'
-  - name: 'net.ipv6.conf.default.max_addresses'
-    value: '1'
-  - name: 'fs.file-max'
-    value: '65535'
+nginx_mail_conf: []
+nginx_mail_sites: []
+
+nginx_stream_conf: []
+nginx_stream_sites: []
+
+nginx_main_conf: []
+
+nginx_config_backup: False
+nginx_test: False
 
 # rest of the host settings
-nginx_pkg_state: present
 nginx_service_enabled: yes
 nginx_service_state: started
 
 # where to lookup for include and scripts
 # deflaults in role directory
 nginx_dir_prefix: .
-
-# main configuration file
-nginx_conf_worker_processes: 1

@@ -1,27 +1,25 @@
 ---
-- name: "check nginx directories"
-  action: file path={{ item.name }} owner={{ item.owner }} group={{ item.group }} mode={{ item.mode }} state=directory
+- name: create config directories
+  file:
+    path: "{{ nginx_dir_etc }}/{{ directory }}"
+    owner: root
+    group: "{{ nginx_group }}"
+    mode: 0750
+    state: directory
   with_items:
-    - { name: "{{ nginx_dir_etc }}", owner: "root", group: "root", mode: "0750" }
-    - { name: "{{ nginx_dir_etc }}/conf.d", owner: "root", group: "root", mode: "0750" }
-    - { name: "{{ nginx_dir_etc }}/sites-available", owner: "root", group: "root", mode: "0750" }
-    - { name: "{{ nginx_dir_etc }}/sites-enabled", owner: "root", group: "root", mode: "0750" }
-    - { name: "{{ nginx_dir_etc }}/modules", owner: "root", group: "root", mode: "0750" }
-    - { name: "{{ nginx_dir_log }}", owner: "root", group: "root", mode: "0750" }
-  tags:
-    - nginx
-    - setup
-
-- name: "creating extra directories"
-  action: file path={{ nginx_dir_etc}}/{{ item.name }} owner={{ item.owner }} group={{ item.group }} mode={{ item.mode }} state=directory
-  with_items: nginx_dir_extra
-  tags:
-    - nginx
-    - setup
-
-- name: "tweaking sysctl"
-  action: sysctl name={{ item.name }} value={{ item.value }} reload=yes state=present
-  tags:
-    - nginx
-    - setup
-  with_items: nginx_sysctl
+    - http.d/conf-available
+    - http.d/conf-enabled
+    - http.d/sites-available
+    - http.d/sites-enabled
+    - mail.d/conf-available
+    - mail.d/conf-enabled
+    - mail.d/sites-available
+    - mail.d/sites-enabled
+    - stream.d/conf-available
+    - stream.d/conf-enabled
+    - stream.d/sites-available
+    - stream.d/sites-enabled
+    - main.d/conf-available
+    - main.d/conf-enabled
+  loop_control:
+    loop_var: directory

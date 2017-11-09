@@ -1,0 +1,15 @@
+---
+__nginx_packages:
+  - {'name': 'nginx-extras', 'state': 'absent'}
+  - {'name': 'nginx-full', 'state': 'absent'}
+  - {'name': 'nginx-light', 'state': 'absent'}
+  - {'name': 'nginx', 'state': 'present'}
+
+__nginx_service: nginx
+__nginx_user: nginx
+__nginx_group: nginx
+
+__nginx_dir_etc: /etc/nginx
+__nginx_file_pid: /var/run/nginx.pid
+__nginx_dir_log: /var/log/nginx
+__nginx_binary: /usr/sbin/nginx

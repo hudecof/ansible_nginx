@@ -1,25 +1,61 @@
-# tasks file for zabbix-agent
-- name: Add the OS specific varibles
-  include_vars: "{{ ansible_os_family }}.yml"
+---
+
+- name: "common | set os specific variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "os-{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+    - "os-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "os-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "os-{{ ansible_distribution }}.yml"
+    - "os-{{ ansible_os_family }}.yml"
   tags:
     - nginx
-    - setup
-    - config
-    - service
+    - nginx:package
+    - nginx:setup
+    - nginx:config
+    - nginx:service
 
-# Debian(setup)  specific tasks
-- include: setup-Debian.yml
-  when: "ansible_os_family == 'Debian'"
+- name: include package tasks
+  include: packages-{{ ansible_os_family }}.yml
+  tags:
+    - nginx
+    - nginx:package
 
-# RedHat(setup) specific tasks
-- include: setup-RedHat.yml
-  when: "ansible_os_family == 'RedHat'"
+- name: include setup tasks
+  include: setup.yml
+  tags:
+    - nginx
+    - nginx:setup
 
-# Common setup tasks
-- include: setup.yml
+- name: include http config tasks
+  include: config-http.yml
+  when: nginx_server_http
+  tags:
+    - nginx
+    - nginx:config
 
-# Common configuration tasks tasks
-- include: config.yml
+- name: include mail config tasks
+  include: config-mail.yml
+  when: nginx_server_mail
+  tags:
+    - nginx
+    - nginx:config
 
-# Common service tasks
-- include: service.yml
+- name: include stream config tasks
+  include: config-stream.yml
+  when: nginx_server_stream
+  tags:
+    - nginx
+    - nginx:config
+
+- name: include main config tasks
+  include: config-main.yml
+  tags:
+    - nginx
+    - nginx:config
+
+- name: include service tasks
+  include: service.yml
+  tags:
+    - nginx
+    - nginx:service
