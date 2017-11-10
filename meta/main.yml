@@ -5,6 +5,7 @@ galaxy_info:
   company: CNC, a.s.
   license: license (GPLv2, CC-BY, etc)
   min_ansible_version: 2.1
+  platforms:
   - name: EL
     versions:
     - 6
