@@ -4,8 +4,7 @@ galaxy_info:
   description: installation and configuration of the nginx
   company: CNC, a.s.
   license: license (GPLv2, CC-BY, etc)
-  min_ansible_version: 2.1 (or higher)
-  platforms:
+  min_ansible_version: 2.1
   - name: EL
     versions:
     - 6
