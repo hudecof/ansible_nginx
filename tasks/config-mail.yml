@@ -38,3 +38,43 @@
   when: not config.enabled
   notify:
     - restart nginx
+
+
+- name: copy mail includes site file
+  template:
+    src: "{{ nginx_dir_prefix }}/mail-site/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/mail.d/site-available/"
+    owner: root
+    group: "{{ nginx_group }}"
+    mode: 0640
+    backup: "{{ nginx_config_backup }}"
+  with_items: "{{ nginx_mail_conf }}"
+  loop_control:
+    loop_var: config
+  notify:
+    - restart nginx
+
+- name: enable mail includes site file
+  file:
+    src: "{{ nginx_dir_etc }}/mail.d/site-available/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/mail.d/site-enabled/{{ config.name }}"
+    owner: root
+    group: "{{ nginx_group }}"
+    state: link
+  with_items: "{{ nginx_mail_conf }}"
+  loop_control:
+    loop_var: config
+  when: config.enabled
+  notify:
+    - restart nginx
+
+- name: disable mail includes site file
+  file:
+    path: "{{ nginx_dir_etc }}/mail.d/site-enabled/{{ config.name }}"
+    state: absent
+  with_items: "{{ nginx_mail_conf }}"
+  loop_control:
+    loop_var: config
+  when: not config.enabled
+  notify:
+    - restart nginx
