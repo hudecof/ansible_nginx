@@ -48,7 +48,7 @@
     group: "{{ nginx_group }}"
     mode: 0640
     backup: "{{ nginx_config_backup }}"
-  with_items: "{{ nginx_mail_conf }}"
+  with_items: "{{ nginx_mail_sites }}"
   loop_control:
     loop_var: config
   notify:
@@ -61,7 +61,7 @@
     owner: root
     group: "{{ nginx_group }}"
     state: link
-  with_items: "{{ nginx_mail_conf }}"
+  with_items: "{{ nginx_mail_sites }}"
   loop_control:
     loop_var: config
   when: config.enabled
@@ -72,7 +72,7 @@
   file:
     path: "{{ nginx_dir_etc }}/mail.d/site-enabled/{{ config.name }}"
     state: absent
-  with_items: "{{ nginx_mail_conf }}"
+  with_items: "{{ nginx_mail_sites }}"
   loop_control:
     loop_var: config
   when: not config.enabled
