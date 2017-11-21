@@ -43,7 +43,7 @@
 - name: copy mail includes site file
   template:
     src: "{{ nginx_dir_prefix }}/mail-site/{{ config.name }}"
-    dest: "{{ nginx_dir_etc }}/mail.d/site-available/"
+    dest: "{{ nginx_dir_etc }}/mail.d/sites-available/"
     owner: root
     group: "{{ nginx_group }}"
     mode: 0640
@@ -56,8 +56,8 @@
 
 - name: enable mail includes site file
   file:
-    src: "{{ nginx_dir_etc }}/mail.d/site-available/{{ config.name }}"
-    dest: "{{ nginx_dir_etc }}/mail.d/site-enabled/{{ config.name }}"
+    src: "{{ nginx_dir_etc }}/mail.d/sites-available/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/mail.d/sites-enabled/{{ config.name }}"
     owner: root
     group: "{{ nginx_group }}"
     state: link
@@ -70,7 +70,7 @@
 
 - name: disable mail includes site file
   file:
-    path: "{{ nginx_dir_etc }}/mail.d/site-enabled/{{ config.name }}"
+    path: "{{ nginx_dir_etc }}/mail.d/sites-enabled/{{ config.name }}"
     state: absent
   with_items: "{{ nginx_mail_sites }}"
   loop_control:

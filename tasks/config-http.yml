@@ -42,7 +42,7 @@
 - name: copy http includes site file
   template:
     src: "{{ nginx_dir_prefix }}/http-site/{{ config.name }}"
-    dest: "{{ nginx_dir_etc }}/http.d/site-available/"
+    dest: "{{ nginx_dir_etc }}/http.d/sites-available/"
     owner: root
     group: "{{ nginx_group }}"
     mode: 0640
@@ -55,8 +55,8 @@
 
 - name: enable http includes site file
   file:
-    src: "{{ nginx_dir_etc }}/http.d/site-available/{{ config.name }}"
-    dest: "{{ nginx_dir_etc }}/http.d/site-enabled/{{ config.name }}"
+    src: "{{ nginx_dir_etc }}/http.d/sites-available/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/http.d/sites-enabled/{{ config.name }}"
     owner: root
     group: "{{ nginx_group }}"
     state: link
@@ -69,7 +69,7 @@
 
 - name: disable http includes site file
   file:
-    path: "{{ nginx_dir_etc }}/http.d/site-enabled/{{ config.name }}"
+    path: "{{ nginx_dir_etc }}/http.d/sites-enabled/{{ config.name }}"
     state: absent
   with_items: "{{ nginx_http_sites }}"
   loop_control:

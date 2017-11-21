@@ -41,7 +41,7 @@
 - name: copy stream includes site file
   template:
     src: "{{ nginx_dir_prefix }}/stream-site/{{ config.name }}"
-    dest: "{{ nginx_dir_etc }}/stream.d/site-available/"
+    dest: "{{ nginx_dir_etc }}/stream.d/sites-available/"
     owner: root
     group: "{{ nginx_group }}"
     mode: 0640
@@ -54,7 +54,7 @@
 - name: enable stream includes site file
   file:
     src: "{{ nginx_dir_etc }}/stream.d/site-available/{{ config.name }}"
-    dest: "{{ nginx_dir_etc }}/stream.d/site-enabled/{{ config.name }}"
+    dest: "{{ nginx_dir_etc }}/stream.d/sites-enabled/{{ config.name }}"
     owner: root
     group: "{{ nginx_group }}"
     state: link
@@ -67,7 +67,7 @@
 
 - name: disable stream includes site file
   file:
-    path: "{{ nginx_dir_etc }}/stream.d/site-enabled/{{ config.name }}"
+    path: "{{ nginx_dir_etc }}/stream.d/sites-enabled/{{ config.name }}"
     state: absent
   with_items: "{{ nginx_stream_sites }}"
   loop_control:
