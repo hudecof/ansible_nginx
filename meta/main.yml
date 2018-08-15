@@ -1,9 +1,9 @@
 ---
 galaxy_info:
+  role_name: nginx
   author: Peter Hudec
   description: installation and configuration of the nginx
-  company: CNC, a.s.
-  license: license (GPLv2, CC-BY, etc)
+  license: BSD
   min_ansible_version: 2.1
   platforms:
   - name: EL
@@ -15,12 +15,13 @@ galaxy_info:
     - lucid
     - precise
     - xenial
+    - bionic
   - name: Debian
     versions:
     - stretch
     - jessie
-    - wheezy
-  categories:
+  galaxy_tags:
   - web
+  - nginx
 dependencies:
   - hudecof.nginx-repo
