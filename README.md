@@ -12,7 +12,7 @@ It's ment to be formore experienced users, sinde of theshell itgenerates non vla
 ## Requirements
 
 - ansible: 2.1
-- role: hudecof.nginx-repo
+- role: hudecof.nginx_repo
 
 ## Role Variables
 

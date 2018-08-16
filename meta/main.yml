@@ -24,4 +24,4 @@ galaxy_info:
   - web
   - nginx
 dependencies:
-  - hudecof.nginx-repo
+  - hudecof.nginx_repo
